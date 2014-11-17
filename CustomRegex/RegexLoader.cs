@@ -29,28 +29,25 @@ namespace CustomRegex
             return load(codeName);
         }
 
-        internal List<string> loadRemoveUntils(XElement part)
+        internal IEnumerable<string> loadRemoveUntils(XElement part)
         {
             return part
                         .Descendants("removeuntil")
-                        .Select(e => (string)e)
-                        .ToList();
+                        .Select(e => (string)e);
         }
 
-        internal List<string> loadRemoveFroms(XElement part)
+        internal IEnumerable<string> loadRemoveFroms(XElement part)
         {
             return part
                         .Descendants("removefrom")
-                        .Select(e => (string)e)
-                        .ToList();
+                        .Select(e => (string)e);
         }
 
-        internal List<Tuple<string, string>> loadReplacementRegexes(XElement part)
+        internal IEnumerable<Tuple<string, string>> loadReplacementRegexes(XElement part)
         {
             return part
                         .Descendants("replace")
-                        .Select(e => new Tuple<string, string>((string)e.Element("in"), (string)e.Element("out")))
-                        .ToList();
+                        .Select(e => new Tuple<string, string>((string)e.Element("in"), (string)e.Element("out")));
         }
 
         internal Dictionary<string, string> loadCodeToExp(XElement part)

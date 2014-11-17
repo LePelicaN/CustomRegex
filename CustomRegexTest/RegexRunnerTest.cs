@@ -13,8 +13,7 @@ namespace CustomRegexTest
         public void TestRemoveUntil()
         {
             CustomRegexInfo customRegex = new CustomRegexInfo();
-            customRegex.RemoveUntils = new List<string>();
-            customRegex.RemoveUntils.Add("test1");
+            customRegex.RemoveUntils = new List<string>{ "test1" };
             Assert.AreEqual("test2test1", RegexRunner.RemoveUntils(customRegex, "abcd test1test2test1"));
         }
 
@@ -22,8 +21,7 @@ namespace CustomRegexTest
         public void TestRemoveFrom()
         {
             CustomRegexInfo customRegex = new CustomRegexInfo();
-            customRegex.RemoveFroms = new List<string>();
-            customRegex.RemoveFroms.Add("test1");
+            customRegex.RemoveFroms = new List<string>{ "test1" };
             Assert.AreEqual("abcd ", RegexRunner.RemoveFroms(customRegex, "abcd test1test2test1"));
         }
 
@@ -31,8 +29,7 @@ namespace CustomRegexTest
         public void TestReplacementRegex()
         {
             CustomRegexInfo customRegex = new CustomRegexInfo();
-            customRegex.RemplacementRegexes = new List<Tuple<string, string>>();
-            customRegex.RemplacementRegexes.Add(Tuple.Create("t.*?t1", "test2"));
+            customRegex.RemplacementRegexes = new List<Tuple<string, string>>{ Tuple.Create("t.*?t1", "test2") };
             Assert.AreEqual("abcd test2test2", RegexRunner.ReplaceRegexes(customRegex, "abcd teeesssst1test3test1"));
         }
 

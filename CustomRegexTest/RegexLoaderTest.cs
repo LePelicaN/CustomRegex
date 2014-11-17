@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Linq;
 
 namespace CustomRegexTest
@@ -9,7 +10,7 @@ namespace CustomRegexTest
     [TestClass]
     public class RegexLoaderTest
     {
-        private delegate List<string> RemoveLoaderDelegate(XElement part);
+        private delegate IEnumerable<string> RemoveLoaderDelegate(XElement part);
 
         [TestMethod]
         public void LoadRemoveUntil()
@@ -36,9 +37,9 @@ namespace CustomRegexTest
                 new XElement("part",
                     new XElement("removes",
                         new XElement(tag, removeText)));
-            List<string> removes = loadMethod(test);
-            Assert.AreEqual(1, removes.Count);
-            Assert.AreEqual(removeText, removes[0]);
+            IEnumerable<string> removes = loadMethod(test);
+            Assert.AreEqual(1, removes.Count());
+            Assert.IsTrue(removes.SequenceEqual(new List<string>{ removeText }));
         }
 
         [TestMethod]
@@ -53,10 +54,9 @@ namespace CustomRegexTest
                         new XElement("in", replaceTextIn),
                         new XElement("out", replaceTextOut))));
             RegexLoader loader = new RegexLoader();
-            List<Tuple<string, string>> replacement = loader.loadReplacementRegexes(test);
-            Assert.AreEqual(1, replacement.Count);
-            Assert.AreEqual(replaceTextIn, replacement[0].Item1);
-            Assert.AreEqual(replaceTextOut, replacement[0].Item2);
+            IEnumerable<Tuple<string, string>> replacement = loader.loadReplacementRegexes(test);
+            Assert.AreEqual(1, replacement.Count());
+            Assert.IsTrue(replacement.SequenceEqual( new List<Tuple<string, string>>{ Tuple.Create( replaceTextIn, replaceTextOut ) } ) );
         }
 
         [TestMethod]
